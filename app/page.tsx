@@ -14,7 +14,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <div className="flex items-start justify-between p-2 shadow-md">
+      <div className="flex flex-col-reverse items-start justify-between p-2 shadow-md md:flex-row">
         <UserInfo userInfo={userInfo} isLoading={isLoading} />
 
         <button

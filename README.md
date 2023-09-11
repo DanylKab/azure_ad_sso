@@ -1,10 +1,10 @@
-# Creator Flow
+# Azure AD SSO integration
 
 Test assessment showcasing a Azure AD SSO authentication with Next.js application
 
 ## Screencast
 
-<https://github.com/DanylKab/creator-flow/assets/138477122/a96c7852-3c5c-4111-98df-bbea17fdcd05>
+here
 
 You can find deployed version at: <here>
 

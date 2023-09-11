@@ -52,15 +52,15 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const themeMode = localStorage.getItem("theme") as THEME_MODE;
 
-    if (
+    if (themeMode) {
+      updateBrowserThemeMode(themeMode);
+    } else if (
       !themeMode &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
       updateBrowserThemeMode(THEME_MODE.DARK);
-    }
-
-    if (themeMode) {
-      updateBrowserThemeMode(themeMode);
+    } else {
+      updateBrowserThemeMode(THEME_MODE.LIGHT);
     }
   }, [updateBrowserThemeMode]);
 
