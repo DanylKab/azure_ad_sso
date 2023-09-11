@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary-light: 255, 255, 255;
+    --bg-primary-dark: 25, 24, 41;
+
+    --text-primary-dark: 25, 24, 41;
+    --text-primary-light: 255, 255, 255;
+  }
+
+  .dark {
+    --bg-primary-light: 25, 24, 41;
+    --bg-primary-dark: 255, 255, 255;
+
+    --text-primary-dark: 255, 255, 255;
+    --text-primary-light: 25, 24, 41;
+  }
+
+  body * {
+    @apply transition-colors duration-100;
+  }
+}
+
+@layer components {
+  .container {
+    @apply mx-auto max-w-7xl px-2 md:px-6 lg:px-8;
+  }
+}
