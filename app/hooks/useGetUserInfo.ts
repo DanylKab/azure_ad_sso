@@ -14,10 +14,9 @@ import { UserInfo } from "@types";
  * @returns SWRResponse<UserInfo>
  */
 const useGetUserInfo = () => {
-  const url = `/api/user-info`;
-
-  const { mutate, data, isLoading, isValidating } = useSWR([url], ([url]) =>
-    fetcher<UserInfo>(url),
+  const { mutate, data, isLoading, isValidating } = useSWR(
+    "/api/user-info",
+    (url) => fetcher<UserInfo>(url),
   );
 
   return {
