@@ -1,14 +1,34 @@
-import { AccountInfo, Configuration, LogLevel } from "@azure/msal-browser";
+import { Configuration, LogLevel } from "@azure/msal-browser";
 
 //@configs
 import { envClientSchema } from "@configs";
 
+export const b2cPolicies = {
+  names: {
+    signUpSignIn: "B2C_1_signupsignin1",
+    editProfile: "B2C_1_profileediting1",
+  },
+  authorities: {
+    signUpSignIn: {
+      authority: `https://${process.env.NEXT_PUBLIC_MSAL_AUTHORITY_DOMAIN}/fancyorgtenant.onmicrosoft.com/B2C_1_signupsignin1`,
+    },
+    editProfile: {
+      authority: `https://${process.env.NEXT_PUBLIC_MSAL_AUTHORITY_DOMAIN}/fancyorgtenant.onmicrosoft.com/B2C_1_profileediting1`,
+    },
+  },
+  authorityDomain: process.env.NEXT_PUBLIC_MSAL_AUTHORITY_DOMAIN,
+};
+
 export const msalConfig: Configuration = {
   auth: {
     clientId: envClientSchema.NEXT_PUBLIC_MSAL_CLIENT_ID,
+    authority: `https://${b2cPolicies.authorityDomain}/fancyorgtenant.onmicrosoft.com/B2C_1_signupsignin1`,
+    knownAuthorities: [b2cPolicies.authorityDomain],
+    redirectUri: process.env.NEXT_PUBLIC_MSAL_REDIRECT_URL,
   },
   cache: {
     cacheLocation: "sessionStorage",
+    storeAuthStateInCookie: false,
   },
   system: {
     loggerOptions: {
@@ -26,11 +46,6 @@ export const msalConfig: Configuration = {
   },
 };
 
-export const getLoginRequest = (account?: AccountInfo | null) => ({
-  scopes: ["User.Read"],
-  loginHint: account?.username,
-});
-
-export const graphConfig = {
-  graphMeEndpoint: envClientSchema.NEXT_PUBLIC_GRAPH_API_ENDPOINT,
+export const loginRequest = {
+  scopes: ["openid"],
 };

@@ -2,6 +2,7 @@
 
 import {
   AuthenticationResult,
+  BrowserAuthError,
   InteractionRequiredAuthError,
   InteractionStatus,
 } from "@azure/msal-browser";
@@ -12,7 +13,7 @@ import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 
 //@configs
-import { getLoginRequest } from "@configs";
+import { loginRequest } from "@configs";
 
 //@hooks
 import { useAccount, useIsAuthenticated, useMsal } from "@azure/msal-react";
@@ -26,15 +27,16 @@ const AuthWidget = () => {
   const isLogoutStatus = inProgress === InteractionStatus.Logout;
 
   const onLoginClick = async () => {
-    const request = getLoginRequest(userAccount);
-
-    let loginResponse: AuthenticationResult | null = null;
+    let authResponse: AuthenticationResult | null = null;
 
     try {
-      loginResponse = await instance.ssoSilent(request);
+      authResponse = await instance.ssoSilent(loginRequest);
     } catch (err) {
-      if (err instanceof InteractionRequiredAuthError) {
-        loginResponse = await instance.loginPopup(request);
+      if (
+        err instanceof InteractionRequiredAuthError ||
+        err instanceof BrowserAuthError
+      ) {
+        authResponse = await instance.loginPopup(loginRequest);
       } else {
         toast(`Unexpected error with login`, {
           type: "error",
@@ -42,15 +44,24 @@ const AuthWidget = () => {
       }
     }
 
-    if (loginResponse?.account) {
-      instance.setActiveAccount(loginResponse.account);
+    if (authResponse?.account) {
+      toast(
+        `Hello, ${
+          authResponse.account.username ||
+          authResponse.account.name ||
+          "stranger"
+        }`,
+        {
+          type: "success",
+        },
+      );
     }
   };
 
   const onLogoutClick = async () => {
-    await instance.logout({
+    await instance.logoutPopup({
       logoutHint: "silent",
-      account: userAccount,
+      idTokenHint: userAccount?.localAccountId,
     });
   };
 

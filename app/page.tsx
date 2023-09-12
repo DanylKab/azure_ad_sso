@@ -1,34 +1,24 @@
 "use client";
 
-import classNames from "classnames";
+//@hooks
+import { useMsal } from "@azure/msal-react";
 
 //@components
-import { UserInfo } from "@components";
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
-
-//@hooks
-import { useGetUserInfo } from "@hooks";
+import { UserAccountActions, UserInfo } from "@components";
 
 const Home = () => {
-  const { isLoading, getUserInfo, userInfo } = useGetUserInfo();
+  const { instance, inProgress } = useMsal();
+
+  const activeAccount = instance.getActiveAccount();
 
   return (
     <div className="container">
       <div className="flex flex-col-reverse items-start justify-between p-2 shadow-md md:flex-row">
-        <UserInfo userInfo={userInfo} isLoading={isLoading} />
-
-        <button
-          className="flex items-center p-2 text-primary-dark disabled:opacity-60"
-          onClick={() => getUserInfo()}
-          disabled={isLoading}
-        >
-          {userInfo ? "Refetch" : "Fetch"} user info
-          <ArrowPathIcon
-            className={classNames("ml-2 h-4 w-4", {
-              ["animate-spin"]: isLoading,
-            })}
-          />
-        </button>
+        <UserInfo
+          accountInfo={activeAccount}
+          isLoading={inProgress !== "none"}
+        />
+        <UserAccountActions />
       </div>
     </div>
   );

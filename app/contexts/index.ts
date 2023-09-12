@@ -1,5 +1,2 @@
-export {
-  default as MsalClientProvider,
-  default as SWRProvider,
-} from "./msalClientProvider";
+export { default as MsalClientProvider } from "./msalClientProvider";
 export { ThemeContext, default as ThemeProvider } from "./themeContext";

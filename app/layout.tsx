@@ -2,7 +2,7 @@
 import { Header, ToastWrapper } from "@components";
 
 //@contexts
-import { MsalClientProvider, SWRProvider, ThemeProvider } from "@contexts";
+import { MsalClientProvider, ThemeProvider } from "@contexts";
 
 //@styles
 import "@styles";
@@ -30,13 +30,11 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => (
   <html lang="en">
     <body className={roboto.className}>
       <MsalClientProvider>
-        <SWRProvider>
-          <ThemeProvider>
-            <Header />
-            <ToastWrapper />
-            {children}
-          </ThemeProvider>
-        </SWRProvider>
+        <ThemeProvider>
+          <Header />
+          <ToastWrapper />
+          {children}
+        </ThemeProvider>
       </MsalClientProvider>
     </body>
   </html>

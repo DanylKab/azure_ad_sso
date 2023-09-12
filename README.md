@@ -4,9 +4,9 @@ Test assessment showcasing a Azure AD SSO authentication with Next.js applicatio
 
 ## Screencast
 
-here
+https://github.com/DanylKab/azure_ad_sso/assets/138477122/78333a83-c2a9-4e72-a17c-364934c67309
 
-You can find deployed version at: <here>
+You can find deployed version at: <https://azure-ad-sso.vercel.app/>
 
 ## Get Started
 
